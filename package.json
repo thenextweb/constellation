@@ -1,0 +1,40 @@
+{
+  "name": "constelation",
+  "version": "0.0.1",
+  "description": "draws cute svg constellations",
+  "main": "build/constellation.js",
+  "scripts": {
+    "gulp": "./node_modules/.bin/gulp",
+    "install": "gulp make",
+    "test": "gulp test",
+    "release": "npm publish && npm install && gulp release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lawwrr/constellation"
+  },
+  "author": "Lau gonzalez",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "babel-core": "^6.11.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "document-ready-promise": "^3.0.1",
+    "es6-promise": "^4.0.5",
+    "es6-promise-promise": "1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-github-release": "^1.2.0",
+    "gulp-mocha-phantomjs": "^0.12.0",
+    "gulp-uglify": "^1.5.4",
+    "imports-loader": "^0.7.0",
+    "json-loader": "^0.5.4",
+    "mocha": "^2.5.3",
+    "mocha-phantomjs": "^4.1.0",
+    "mustache": "^2.2.1",
+    "raw-loader": "^0.5.1",
+    "snapsvg": "^0.5.1",
+    "webpack": "^1.13.1",
+    "webpack-stream": "^3.2.0",
+    "wrapper-webpack-plugin": "0.1.11"
+  }
+}

@@ -1,0 +1,9 @@
+node_modules/*
+
+dist/*
+!dist/.gitexists
+
+test/screenshots/*
+!test/screenshots/.gitexists
+
+.DS_store
