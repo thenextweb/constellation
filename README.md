@@ -91,4 +91,4 @@ There are some extra advanced properties too
 ## Usage (legacy)
 Consider migrating your codebase
 
-Otherwise, grab the [latest release](https://github.com/thenextweb/indexdotco-js/releases) and drop it in as a script tag. `window.constellation` will appear.
+Otherwise, grab the [latest release](https://github.com/lawwrr/constellation/releases) and drop it in as a script tag. `window.constellation` will appear.
