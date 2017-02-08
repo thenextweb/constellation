@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Constellation</title>
+		<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background: #000
+		}
+		svg {
+		}
+		</style>
+		<script src=" https://raw.githubusercontent.com/adobe-webplatform/Snap.svg/master/dist/snap.svg.js"></script>
+		<script src="../dist/constellation.min.js"></script>
+		<script>
+
+		window.document.addEventListener("DOMContentLoaded", (event) => {
+			let constellationInstance = constellation({
+				size:[window.innerWidth,window.innerHeight],
+				element: document.querySelector('svg'),
+				nodeSize: 2,
+				nodePadding: 1,
+				padding: [100,100],
+				nodesTotal: 30,
+				shipsTotal: 200,
+				fuzzyness: 100,
+			});
+			constellationInstance.then((constellationThings)=>{
+				constellationThings.repaint({
+					line: {
+						stroke: '#fff',
+						strokeWidth: .5,
+						opacity: .2
+					},
+					star: {
+						fill: '#fff',
+					},
+					lineGroup: {},
+					starGroup: {}
+				});
+			})
+		});
+
+		</script>
+	</head>
+	<body>
+		<svg></svg>
+	</body>
+</html>
