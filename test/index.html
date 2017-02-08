@@ -15,18 +15,19 @@
 		}
 		</style>
 		<script src="../node_modules/snapsvg/dist/snap.svg-min.js"></script>
-		<script src="../dist/constellation.min.js"></script>
+		<script src="../dist/constellation.js"></script>
 		<script>
 
 		window.document.addEventListener("DOMContentLoaded", (event) => {
 			let constellationInstance = constellation({
 				size:[window.innerWidth,window.innerHeight],
 				element: document.querySelector('svg'),
+				canvas: document.querySelector('canvas'),
 				nodeSize: 2,
 				nodePadding: 1,
 				padding: [100,100],
 				nodesTotal: 30,
-				shipsTotal: 200,
+				shipsTotal: 100,
 				fuzzyness: 100,
 			});
 			constellationInstance.then((constellationThings)=>{
@@ -48,6 +49,7 @@
 		</script>
 	</head>
 	<body>
+		<canvas></canvas>
 		<svg></svg>
 	</body>
 </html>
