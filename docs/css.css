@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Pangolin');
+
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+}
+body {
+	background: #000;
+	font-family: 'Pangolin', cursive;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	bottom:0;
+	left:0;
+	right:0;
+}
+canvas {
+	background: linear-gradient(to bottom right,#450068,#2f0068);
+}
+.ct {
+	color: #fff;
+	position: fixed;
+	height: 4em;
+	width: 20em;
+	text-align: center;
+	margin: auto;
+	top: 0;
+	bottom:0;
+	left:0;
+	right:0;
+}
+
+.ct h1 {
+	font-size: 2rem;
+}
+
+.ct p {
+	font-size: .75rem;
+	opacity: .75;
+}
+
+.ct a {
+	display: inline-block;
+	color: #450068;
+	padding: .5em 1em;
+	border-radius: 99999em;
+	background: #fff;
+	font-size: 1rem;
+	margin-top: 2em;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.ct a:hover {
+	box-shadow: inset 0 0 0 2px #fff;
+	background: none;
+	color: #fff;
+}
