@@ -16,7 +16,7 @@ describe('Rendering', function() {
 			padding: [100,100],
 			nodesTotal: 100,
 			shipsTotal: 400,
-			fuzzyness: 100,
+			fuzziness: 100,
 			style: {
 				starColor: '#fff',
 				lineColor: 'rgba(255,255,255,.5)',

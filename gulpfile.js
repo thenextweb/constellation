@@ -58,8 +58,7 @@ gulp.task('default', function() {
 					Promise: 'es6-promise-promise'
 				}),
 				new WrapperPlugin({
-					header: '/* constellation – dev */',
-					footer: "if(window.constellation && typeof window.constellation === 'function'){window.constellation = window.constellation()}"
+					header: '/* ✨ constellation ✨ – dev – https://github.com/lawwrr/constellation  */'
 				})
 			],
 			module: webpackModule,
@@ -83,8 +82,7 @@ gulp.task('make', function() {
 					Promise: 'es6-promise-promise'
 				}),
 				new WrapperPlugin({
-				  header: '/* constellation – https://github.com/lawwrr/constellation */',
-				  footer: "if(window.constellation && typeof window.constellation === 'function'){window.constellation = window.constellation()}"
+				  header: '/* ✨ constellation ✨ – https://github.com/lawwrr/constellation */'
 				})
 			],
 			module: webpackModule,
