@@ -3,7 +3,7 @@ draws cute moving svg constellations.
 #this is kinda broken still nothing works i'm uploading it so i don't fall asleep
 
 <p align="center">
-  <img src="http://i.imgur.com/SUXqAiF.png">
+  <img src="http://i.imgur.com/gLCMGoi.png">
 </p>
 
 ## Usage (es6/webpack)
