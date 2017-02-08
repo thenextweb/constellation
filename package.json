@@ -2,6 +2,7 @@
   "name": "constelation-canvas",
   "version": "1.0.0",
   "description": "draws cute moving canvas constellations",
+
   "main": "src/app.js",
   "scripts": {
     "gulp": "./node_modules/.bin/gulp",
