@@ -1,4 +1,4 @@
-const Puppis = require("worker-loader?inline!./puppis.js");
+const Puppis = require("worker-loader?inline!./worker/puppis.js");
 
 const constellation = function ({
 	size = [400,400],
