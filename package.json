@@ -1,8 +1,8 @@
 {
-  "name": "constelation",
+  "name": "constelation-svg",
   "version": "0.0.1",
-  "description": "draws cute svg constellations",
-  "main": "build/constellation.js",
+  "description": "draws cute moving svg constellations",
+  "main": "src/app.js",
   "scripts": {
     "gulp": "./node_modules/.bin/gulp",
     "install": "gulp make",

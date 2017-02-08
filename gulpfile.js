@@ -52,7 +52,7 @@ gulp.task('default', function() {
 			watch: true,
 			devtool: 'source-map',
 			output: {
-				filename: 'constellation-dev.js',
+				filename: 'constellation.js',
 				library: 'constellation',
 				libraryTarget: 'umd'
 			},
@@ -74,7 +74,7 @@ gulp.task('make', function() {
 	return gulp.src('src/app.js')
 		.pipe(webpack({
 			output: {
-				filename: 'constellation.js',
+				filename: 'constellation.min.js',
 				library: 'constellation',
 				libraryTarget: 'umd'
 			},
@@ -97,7 +97,7 @@ gulp.task('make', function() {
 })
 
 gulp.task('release', function(){
-	return gulp.src('dist/constellation.js')
+	return gulp.src('dist/constellation.min.js')
 		.pipe(release({
 			manifest: require('./package.json')
 		}).on('error',function(e){
