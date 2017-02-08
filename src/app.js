@@ -2,8 +2,6 @@ const constellation = function ({
 	size = [400,400],
 	element = undefined,
 	canvas = undefined,
-	nodeSize = 5,
-	nodePadding = 2,
 	nodesTotal = 30,
 	shipsTotal = 70,
 	fuzzyness = 100,
@@ -14,16 +12,7 @@ const constellation = function ({
 		active: .125,
 		passive: .075
 	},
-	onDraw = {},
-	styles = {
-		line: {
-			stroke: '#000',
-			strokeWidth: 1
-		},
-		star: {
-			fill: '#000',
-		}
-	}
+	onDraw = {}
 } = {}) {
 
 	if(padding[0] === 0 && padding[1] === 0) {
@@ -61,16 +50,22 @@ const constellation = function ({
 		ctx.clearRect(0, 0, renderSize[0],renderSize[1]);
 
 		/*lines*/
-		ctx.globalCompositeOperation = 'source-over';
-		ctx.beginPath();
-			ctx.lineWidth = style.lineSize;
-			ctx.strokeStyle = style.lineColor;
-			ctx.beginPath();
-			objects.lines.map((line)=>{
-				ctx.moveTo(line.pos[0],line.pos[1]);
-				ctx.lineTo(line.pos[2],line.pos[3]);
-			});
-			ctx.stroke();
+		objects.lines.map((line)=>{
+			if(onDraw.line) {
+				onDraw.line(ctx,style,line);
+			}
+			else {
+				ctx.beginPath();
+					ctx.lineWidth = style.lineSize;
+					ctx.strokeStyle = style.lineColor;
+					ctx.moveTo(line.pos[0],line.pos[1]);
+					ctx.lineTo(line.pos[2],line.pos[3]);
+					ctx.globalCompositeOperation = 'source-over';
+					ctx.stroke();
+				ctx.closePath();
+			}
+			if(onDraw.afterLine) onDraw.afterLine(ctx,style,line);
+		});
 
 		/*stars*/
 		if(style.starPadding > 0) {
@@ -88,17 +83,24 @@ const constellation = function ({
 		}
 
 		objects.nodes.map((node)=>{
-			ctx.beginPath();
-				ctx.arc(
-					node.pos[0], node.pos[1], style.starSize,0, 2 * Math.PI
-				);
-				ctx.fillStyle = style.starColor;
-				ctx.globalCompositeOperation = 'source-over';
-				ctx.fill();
-			ctx.closePath();
-			if(onDraw.star) onDraw.star(ctx,node,style);
+			if(onDraw.star) {
+				onDraw.star(ctx,style,node);
+			}
+			else {
+				ctx.beginPath();
+					ctx.arc(
+						node.pos[0], node.pos[1], style.starSize,0, 2 * Math.PI
+					);
+					ctx.fillStyle = style.starColor;
+					ctx.globalCompositeOperation = 'source-over';
+					ctx.fill();
+				ctx.closePath();
+			}
+			if(onDraw.afterStar) onDraw.afterStar(ctx,style,node);
 		});
 		ctx.closePath();
+
+		if(onDraw.afterFrame) onDraw.afterFrame(ctx,style);
 
 	}
 
@@ -116,8 +118,8 @@ const constellation = function ({
 		}
 		let node = [makeDimension('x'),makeDimension('y')];
 		let chunk = JSON.stringify([
-			Math.ceil(node[0]/renderSize[0]*(renderSize[0]/nodeSize/10)),
-			Math.ceil(node[1]/renderSize[1]*(renderSize[1]/nodeSize/10))
+			Math.ceil(node[0]/renderSize[0]*(renderSize[0]/style.starSize/10)),
+			Math.ceil(node[1]/renderSize[1]*(renderSize[1]/style.starSize/10))
 		]);
 		if(tries > 0 && chunks.indexOf(chunk) >= 0) {
 			return makeNode(tries-1);

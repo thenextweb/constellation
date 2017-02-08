@@ -1,7 +1,7 @@
 {
-  "name": "constelation-svg",
+  "name": "constelation-canvas",
   "version": "0.0.1",
-  "description": "draws cute moving svg constellations",
+  "description": "draws cute moving canvas constellations",
   "main": "src/app.js",
   "scripts": {
     "gulp": "./node_modules/.bin/gulp",
