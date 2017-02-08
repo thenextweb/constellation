@@ -45,11 +45,9 @@ All of them except `canvas` are optional
 | canvas (DOM element) | Canvas element to draw in |
 | nodesTotal | Total number of nodes |
 | shipsTotal | Total number of relationships between nodes |
-
 | speed(object) | Object with speed options for the stars. |
 | speed.active | Speed when the mouse is moving the stars. |
 | speed.passive | Speed when the stars are jiggling. |
-
 | style(object) | Object with style options |
 | style.starSize | Size of the stars |
 | style.starColor | Color of the stars |
