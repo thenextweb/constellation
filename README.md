@@ -1,10 +1,11 @@
 # constellation
-draws cute moving svg constellations. 
-#this is kinda broken still nothing works i'm uploading it so i don't fall asleep
+Draws cute moving svg constellations. 
 
 <p align="center">
   <img src="http://i.imgur.com/gLCMGoi.png">
 </p>
+
+🚨 this is kinda broken still no tests or anything i'm uploading it so i don't fall asleep 🚨
 
 ## Usage (es6/webpack)
 Grab the code from here or npm
