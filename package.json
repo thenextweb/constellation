@@ -1,6 +1,6 @@
 {
   "name": "constelation-svg",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "draws cute moving svg constellations",
   "main": "src/app.js",
   "scripts": {
