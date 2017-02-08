@@ -1,6 +1,6 @@
 {
   "name": "constelation-canvas",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "draws cute moving canvas constellations",
   "main": "src/app.js",
   "scripts": {

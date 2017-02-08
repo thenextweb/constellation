@@ -17,7 +17,7 @@
 				if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
 				s.parentNode.insertBefore(o, s);
 			}
-			async(window.location.hash === '#local' ? '../dist/constellation.js':'../dist/constellation.js',function(){
+			async(window.location.hash === '#local' ? '../dist/constellation.js':'../dist/constellation.min.js',function(){
 				mocha.run();
 			})
 		</script>
