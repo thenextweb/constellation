@@ -1,0 +1,13 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	background: #000
+}
+#mocha {
+	background: #fff;
+	padding: 2em;
+	font-family: sans-serif;
+	color: #000;
+}

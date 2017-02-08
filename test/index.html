@@ -3,51 +3,27 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Constellation</title>
-		<style>
-		* {
-			margin: 0;
-			padding: 0;
-		}
-		body {
-			background: #000
-		}
-		svg {
-		}
-		</style>
-		<script src="../node_modules/snapsvg/dist/snap.svg-min.js"></script>
-		<script src="../dist/constellation.min.js"></script>
+		<link rel="stylesheet" href="css.css" />
+		<script src="../dist/constellation.js"></script>
+		<script src="../node_modules/mocha/mocha.js"></script>
+		<script>mocha.setup('bdd');</script>
+		<script src="test.js"></script>
 		<script>
-
-		window.document.addEventListener("DOMContentLoaded", (event) => {
-			let constellationInstance = constellation({
-				size:[window.innerWidth,window.innerHeight],
-				element: document.querySelector('svg'),
-				nodeSize: 2,
-				nodePadding: 1,
-				padding: [100,100],
-				nodesTotal: 30,
-				shipsTotal: 200,
-				fuzzyness: 100,
-			});
-			constellationInstance.then((constellationThings)=>{
-				constellationThings.repaint({
-					line: {
-						stroke: '#fff',
-						strokeWidth: .5,
-						opacity: .2
-					},
-					star: {
-						fill: '#fff',
-					},
-					lineGroup: {},
-					starGroup: {}
-				});
+			window.async = function(u, c){
+				var d = document, t = 'script',
+				  o = d.createElement(t),
+				  s = d.getElementsByTagName(t)[0];
+				o.src = u;
+				if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+				s.parentNode.insertBefore(o, s);
+			}
+			async(window.location.hash === '#local' ? '../dist/constellation.js':'../dist/constellation.min.js',function(){
+				mocha.run();
 			})
-		});
-
 		</script>
 	</head>
 	<body>
-		<svg></svg>
+		<canvas></canvas>
+		<div id="mocha"></div>
 	</body>
 </html>

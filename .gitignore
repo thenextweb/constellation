@@ -7,3 +7,5 @@ test/screenshots/*
 !test/screenshots/.gitexists
 
 .DS_store
+
+npm-debug.log
