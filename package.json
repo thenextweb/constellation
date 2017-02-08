@@ -13,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/lawwrr/constellation"
   },
-  "author": "Lau gonzalez",
+  "author": "Laura mayhem",
   "license": "GPL-3.0",
   "dependencies": {
     "babel-core": "^6.11.4",
@@ -26,13 +26,9 @@
     "gulp-github-release": "^1.2.0",
     "gulp-mocha-phantomjs": "^0.12.0",
     "gulp-uglify": "^1.5.4",
-    "imports-loader": "^0.7.0",
-    "json-loader": "^0.5.4",
     "mocha": "^2.5.3",
     "mocha-phantomjs": "^4.1.0",
-    "mustache": "^2.2.1",
     "raw-loader": "^0.5.1",
-    "snapsvg": "^0.5.1",
     "webpack": "^1.13.1",
     "webpack-stream": "^3.2.0",
     "wrapper-webpack-plugin": "0.1.11"
