@@ -3,6 +3,7 @@ const Snap = require(`snapsvg`);
 const constellation = function ({
 	size = [400,400],
 	element = undefined,
+	canvas = undefined,
 	nodeSize = 5,
 	nodePadding = 2,
 	nodesTotal = 30,
@@ -159,6 +160,11 @@ const constellation = function ({
 				snap = Snap(size[0],size[1]);
 			}
 
+			if(canvas) {
+				canvas.setAttribute('width',size[0]);
+				canvas.setAttribute('height',size[1]);
+			}
+
 			$nodes = snap.g();
 			$lines = snap.g();
 			$clip = snap.g();
@@ -172,24 +178,25 @@ const constellation = function ({
 			window.$nodeList = $nodeList;
 			window.$shipList = $shipList;
 
+			snap._jiggles = true;
+			snap.mousemove((ev)=>{
+				var x = ev.pageX - snap.node.offsetLeft +document.documentElement.scrollLeft;
+				var y = ev.pageY - snap.node.offsetTop + document.documentElement.scrollTop;
+
+				snap._jiggles = false;
+				lastMouse = [x,y];
+			});
+			snap.mouseout(()=>{
+				snap._jiggles = true;
+			});
+
 			nodes.map((node)=>{
 
-				let pos = node.position[0]+','+node.position[1];
+				let posAsString = JSON.stringify([node.position[0],node.position[1]]);
 				let $node = $nodes.circle(node.position[0], node.position[1], nodeSize);
 				let $clippingNode = $clip.circle(node.position[0], node.position[1], nodeSize+nodePadding);
 
 				$node._previousTransform = [0,0];
-				$node._jiggles = true;
-				snap.mousemove((ev)=>{
-					var x = ev.pageX - snap.node.offsetLeft +document.documentElement.scrollLeft;
-					var y = ev.pageY - snap.node.offsetTop + document.documentElement.scrollTop;
-
-					$node._jiggles = false;
-					lastMouse = [x,y];
-				});
-				snap.mouseout(()=>{
-					$node._jiggles = true;
-				});
 
 				$node._jiggle = [Math.random()*20 - 10,Math.random()*20 - 10];
 				setInterval(()=>{
@@ -202,7 +209,7 @@ const constellation = function ({
 					let y = lastMouse[1];
 					let localSpeed = speed.active;
 
-					if($node._jiggles) {
+					if(snap._jiggles) {
 						localSpeed = speed.passive;
 						x = node.position[0] + $node._jiggle[0],
 						y = node.position[1] + $node._jiggle[1]
@@ -214,53 +221,54 @@ const constellation = function ({
 						(y > node.position[1] - fuzzyness*1.1 && y < node.position[1] + fuzzyness*1.1)
 					)
 					{
-						let fromCenter = {
-							x: node.position[0]-x,
-							y: node.position[1]-y
-						}
+						let fromCenter = [
+							node.position[0]-x,
+							node.position[1]-y
+						];
 
-						let displacement = {};
+						let displacement = [];
 
-						displacement.y = 0;
-						if(fromCenter.x > 0) {
-							displacement.x = $node._previousTransform[0] + localSpeed - ($node._previousTransform[0]/fuzzyness)*localSpeed
+						if(fromCenter[0] > 0) {
+							displacement[0] = $node._previousTransform[0] + localSpeed - ($node._previousTransform[0]/fuzzyness)*localSpeed
 						}
 						else {
-							displacement.x = $node._previousTransform[0] - localSpeed + ($node._previousTransform[0]*-1/fuzzyness)*localSpeed
+							displacement[0] = $node._previousTransform[0] - localSpeed + ($node._previousTransform[0]*-1/fuzzyness)*localSpeed
 						}
-						if(fromCenter.y > 0) {
-							displacement.y = $node._previousTransform[1] + localSpeed - ($node._previousTransform[1]/fuzzyness)*localSpeed
+						if(fromCenter[1] > 0) {
+							displacement[1]= $node._previousTransform[1] + localSpeed - ($node._previousTransform[1]/fuzzyness)*localSpeed
 						}
 						else {
-							displacement.y = $node._previousTransform[1] - localSpeed + ($node._previousTransform[1]*-1/fuzzyness)*localSpeed
+							displacement[1] = $node._previousTransform[1] - localSpeed + ($node._previousTransform[1]*-1/fuzzyness)*localSpeed
 						}
 
-						$node._previousTransform = [displacement.x,displacement.y];
-						$node.attr({
-							style: `transform: translateX(${$node._previousTransform[0]}px) translateY(${$node._previousTransform[1]}px)`
-						});
-						$clippingNode.attr({
-							style: `transform: translateX(${$node._previousTransform[0]}px) translateY(${$node._previousTransform[1]}px)`
-						});
-						try {
-							$shipList.end[pos].map(($line)=>{
-								$line.attr({
-									'x2': $line._originalPos[2]+displacement.x,
-									'y2': $line._originalPos[3]+displacement.y,
-								})
-							})
-						} catch(e){
-							/*sometimes shiplist has no ships*/
+						$node._previousTransform = displacement;
+						$node.node.setAttribute(
+							'cx', node.position[0] + $node._previousTransform[0]
+						);
+						$node.node.setAttribute(
+							'cy', node.position[1] + $node._previousTransform[1]
+						);
+						if($shipList.end[posAsString]) {
+							for (var i = 0, len = $shipList.end[posAsString].length; i < len; i++) {
+								let $line = $shipList.end[posAsString][i]
+								$line.node.setAttribute(
+									'x2',$line._originalPos[2]+$node._previousTransform[0]
+								);
+								$line.node.setAttribute(
+									'y2',$line._originalPos[3]+$node._previousTransform[1]
+								);
+							}
 						}
-						try {
-							$shipList.start[pos].map(($line)=>{
-								$line.attr({
-									'x1': $line._originalPos[0]+displacement.x,
-									'y1': $line._originalPos[1]+displacement.y,
-								})
-							})
-						} catch(e){
-							/*sometimes shiplist has no ships*/
+						if($shipList.start[posAsString]) {
+							for (var i = 0, len = $shipList.start[posAsString].length; i < len; i++) {
+								let $line = $shipList.start[posAsString][i]
+								$line.node.setAttribute(
+									'x1',$line._originalPos[0]+$node._previousTransform[0]
+								);
+								$line.node.setAttribute(
+									'y1',$line._originalPos[1]+$node._previousTransform[1]
+								);
+							}
 						}
 					}
 
@@ -269,12 +277,12 @@ const constellation = function ({
 					})
 				};
 				fun()
-				$nodeList[pos] = $node;
+				$nodeList[posAsString] = $node;
 			})
 
 			ships.map((ship)=>{
-				let startPos = ship[0]+','+ship[1];
-				let endPos = ship[2]+','+ship[3];
+				let startPos = JSON.stringify([ship[0],ship[1]]);
+				let endPos = JSON.stringify([ship[2],ship[3]]);
 				let line = $lines.line(ship[0],ship[1],ship[2],ship[3])
 
 				line._originalPos = [ship[0],ship[1],ship[2],ship[3]];
