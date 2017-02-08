@@ -3,44 +3,27 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Constellation</title>
-		<style>
-		* {
-			margin: 0;
-			padding: 0;
-		}
-		body {
-			background: #000
-		}
-		svg {
-		}
-		</style>
+		<link rel="stylesheet" href="css.css" />
 		<script src="../dist/constellation.js"></script>
+		<script src="../node_modules/mocha/mocha.js"></script>
+		<script>mocha.setup('bdd');</script>
+		<script src="test.js"></script>
 		<script>
-
-		window.document.addEventListener("DOMContentLoaded", (event) => {
-			let constellationInstance = constellation({
-				size:[window.innerWidth,window.innerHeight],
-				canvas: document.querySelector('canvas'),
-				nodeSize: 2,
-				nodePadding: 1,
-				padding: [100,100],
-				nodesTotal: 100,
-				shipsTotal: 400,
-				fuzzyness: 100,
-				style: {
-					starColor: '#fff',
-					lineColor: 'rgba(255,255,255,.5)',
-					lineSize: .5,
-					starPadding: 0,
-					starSize: 2
-				}
-			});
-		});
-
+			window.async = function(u, c){
+				var d = document, t = 'script',
+				  o = d.createElement(t),
+				  s = d.getElementsByTagName(t)[0];
+				o.src = u;
+				if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+				s.parentNode.insertBefore(o, s);
+			}
+			async(window.location.hash === '#local' ? '../dist/constellation.js':'../dist/constellation.js',function(){
+				mocha.run();
+			})
 		</script>
 	</head>
 	<body>
 		<canvas></canvas>
-		<svg></svg>
+		<div id="mocha"></div>
 	</body>
 </html>

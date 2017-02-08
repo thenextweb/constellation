@@ -12,17 +12,14 @@ var webpackModule = {
 			test: /\.css$/, loader: "raw"
 		},
 		{
-			test: require.resolve('snapsvg'),
-			loader: 'imports-loader?this=>window,fix=>module.exports=0'
-		},
-		{
 			test: /\.mustache$/, loader: "raw"
 		},
 		{
 			test: /.js?$/,
 			loader: 'babel-loader',
 			query: {
-				presets: ['es2015']
+				presets: ['es2015'],
+				plugins: ["transform-object-assign"]
 			}
 		}
 	]
@@ -57,6 +54,9 @@ gulp.task('default', function() {
 				libraryTarget: 'umd'
 			},
 			plugins: [
+				new webpack.webpack.ProvidePlugin({
+					Promise: 'es6-promise-promise'
+				}),
 				new WrapperPlugin({
 					header: '/* constellation – dev */',
 					footer: "if(window.constellation && typeof window.constellation === 'function'){window.constellation = window.constellation()}"
@@ -78,10 +78,10 @@ gulp.task('make', function() {
 				library: 'constellation',
 				libraryTarget: 'umd'
 			},
-			externals: {
-				'snapsvg' : 'Snap'
-			},
 			plugins: [
+				new webpack.webpack.ProvidePlugin({
+					Promise: 'es6-promise-promise'
+				}),
 				new WrapperPlugin({
 				  header: '/* constellation – https://github.com/lawwrr/constellation */',
 				  footer: "if(window.constellation && typeof window.constellation === 'function'){window.constellation = window.constellation()}"
