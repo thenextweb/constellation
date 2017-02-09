@@ -8,6 +8,8 @@ Draws cute animated canvas constellations.
 </p>
 
 
+
+
 ## Usage (webpack+babel)
 Grab the code from here or npm
 
@@ -37,8 +39,12 @@ Then just import it and feed it some parameters. There's a full list below.
     });
 
 
+
+
 ## Usage (browser)
 Grab the [latest release](https://github.com/lawwrr/constellation/releases) and drop it in as a script tag. `window.constellation` will appear
+
+
 
 
 ## Parameters
@@ -64,6 +70,8 @@ All of them are optional but you might want to change some
 | **style.lineSize** | `number` | Size (line weight) of the lines |
 
 
+
+
 ## Drawing things yourself
 For further customization you can also pass an `onDraw` parameter with a number of callbacks. These will allow you to take over the drawing process of the canvas.
 
@@ -71,24 +79,25 @@ For further customization you can also pass an `onDraw` parameter with a number 
         size:[500,800],
         canvas: document.querySelector('canvas'),
         onDraw: {
-            afterStar: (ctx,node,style) => {
-                ctx.beginPath();
-                ctx.arc(
-                    node.pos[0], node.pos[1], style.starSize,0, 2 * Math.PI
-                );
-                ctx.globalCompositeOperation = 'destination-over';
+            afterStar: (ctx,style,star) => {
                 ctx.fillStyle = 'rgba(0,0,0,0)';
-                ctx.shadowColor = '#999';
-                ctx.shadowBlur = 20;
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 15;
+                ctx.beginPath();
+                    ctx.arc(
+                        node.pos[0], node.pos[1], style.starSize,0, 2 * Math.PI
+                    );
+                    ctx.globalCompositeOperation = 'destination-over';
+                    ctx.shadowColor = '#999';
+                    ctx.shadowBlur = 20;
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 15;
+                    ctx.fill();
                 ctx.closePath();
-                ctx.fill();
+                ctx.fillStyle = style.starColor;
             }
         }
     });
 
-You can see how these plug together at `src/class/Canvas.js` but here's a quick chart
+You can see how these plug in at `src/class/Canvas.js` for yourself to better understand what's happening but here's a quick reference.
 
 | Callback | Description |
 | --- | --- |
@@ -98,14 +107,11 @@ You can see how these plug together at `src/class/Canvas.js` but here's a quick 
 | **afterLine**(ctx,style,line) | takes place after the default line drawing. `line` contains the coordinates for the line that was drawn |
 | **afterFrame**(ctx,style,objects) | takes place after drawing a full frame. `objects` contains all coordinates for stars & lines |
 
+For `afterStar` & `afterLine` you have to reset all fillStyles and whatnot or otherwise they'll carry over into the built-in drawing code. Good news is that for performance reasons you'll probably want to avoid `afterStar` & `afterLine` anyway and instead provide a full drawing solution or plug into `afterFrame`.
 
-### Advanced
 
-Available callbacks are `star`,`afterStar`,`line`,`afterLine`,`afterFrame`.
-
-`star` & `line` will completely override the default drawing stage while `afterStar`,`afterLine` & `afterFrame` take place after their drawing is complete
-
-There are some extra advanced properties too! `fuzziness` for controlling how reactive to the mouse stars are and `scale`, for drawing the canvas at a different resolution (it's @2x by default). Check out the code (i mean it's like 2? files total) to see how they work.
+## Advanced
+There are some extra advanced properties too! `fuzziness` for controlling how reactive to the mouse stars are and `scale`, for drawing the canvas at a different resolution (it's @2x by default). Check out the code (i mean it's like 5? files total) to see how they work.
 
 ALSO!! should you ever need it, `Constellation` will return a promise containing `$constellation`, the canvas DOM object after everything there has been done.
 
@@ -113,6 +119,6 @@ ALSO!! should you ever need it, `Constellation` will return a promise containing
         /*blah*/
     });
 
-    constellationInstance.then(function(data){
+    constellation.then(function(data){
         console.log(data.$constellation);
     })
