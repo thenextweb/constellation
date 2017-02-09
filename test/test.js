@@ -6,7 +6,8 @@ describe('Initialization', function() {
 });
 
 describe('Rendering', function() {
-	this.timeout(10000);
+	this.timeout(1000);
+
 	it('should render a constellation', function(done) {
 		var constellationInstance = window.constellation({
 			size:[window.innerWidth,window.innerHeight],

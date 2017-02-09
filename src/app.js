@@ -1,15 +1,23 @@
 import Canvas from 'class/Canvas';
+import Puppis from 'worker-loader?inline!./worker/puppis.js';
+
 import text from 'lib/text';
 
-const Puppis = require("worker-loader?inline!./worker/puppis.js");
 
-const styleDefaults = {
-	starSize: 4,
-	starPadding: 5,
-	starColor: '#000',
-	lineColor: 'rgba(0,0,0,.5)',
-	lineSize: 2
-};
+const defaults = {
+	style: {
+		starSize: 4,
+		starPadding: 5,
+		starColor: '#000',
+		lineColor: 'rgba(0,0,0,.5)',
+		lineSize: 2
+	},
+	speed: {
+		active: .125,
+		passive: .075
+	}
+}
+
 
 const constellation = function ({
 	size = [400,400],
@@ -21,25 +29,16 @@ const constellation = function ({
 	padding = [0,0],
 	scale = 2,
 	style = {},
-	speed = {
-		active: .125,
-		passive: .075
-	},
+	speed = {},
 	onDraw = {}
 } = {}) {
 
 
-	/*add to defaults*/
 	if(padding[0] === 0 && padding[1] === 0) padding = [fuzziness,fuzziness]
-	style = Object.assign({}, styleDefaults, style);
+	style = Object.assign({}, defaults.style, style);
+	speed = Object.assign({}, defaults.speed, speed);
 
 
-	/*set up parameters*/
-	let jiggles = true;
-	let lastMouse = [0,0];
-
-
-	/*send all the important bits to worker*/
 	const puppis = new Puppis();
 	text.send(
 		puppis,
@@ -55,74 +54,79 @@ const constellation = function ({
 		}
 	);
 
+
+	const onDOMReady = (resolve,reject) => {
+
+		let isJiggling = true;
+		let pointerPosition = [0,0];
+
+		if(!canvas) {
+			canvas = document.createElement('canvas');
+			document.body.appendChild(canvas);
+		}
+
+		canvas.setAttribute('width',size[0]*scale);
+		canvas.setAttribute('height',size[1]*scale);
+		canvas.style.width = `${size[0]}px`;
+		canvas.style.height = `${size[1]}px`;
+		canvas.getContext('2d').scale(scale,scale);
+
+		canvas.addEventListener('mousemove',(ev)=>{
+			var x = ev.pageX - canvas.getBoundingClientRect().left + document.documentElement.scrollLeft;
+			var y = ev.pageY - canvas.getBoundingClientRect().top + document.documentElement.scrollTop;
+			isJiggling = false;
+			pointerPosition = [x,y];
+		});
+		canvas.addEventListener('mouseout',(ev)=>{
+			isJiggling = true;
+		});
+
+		const canvasDrawer = new Canvas(canvas,{
+			style: style,
+			onDraw: onDraw
+		});
+
+		const repaint = () => {
+			text.send(
+				puppis,
+				'requestUpdate',
+				{
+					pointerPosition: pointerPosition,
+					isJiggling: isJiggling
+				}
+			)
+		}
+
+		puppis.addEventListener('message', (msg)=>{
+			text.is(
+				msg,'updateComplete',
+				(payload) => {
+					requestAnimationFrame(()=>{
+						canvasDrawer.draw({
+							stars: payload.stars,
+							lines: payload.lines
+						});
+						repaint();
+					})
+				}
+			)
+		});
+
+		repaint();
+
+		resolve({
+			$constellation: canvas
+		});
+
+	};
+
+
 	return new Promise((resolve,reject)=>{
 
-		let start = () => {
-
-			if(!canvas) {
-				canvas = document.createElement('canvas');
-				document.body.appendChild(canvas);
-			}
-
-			canvas.setAttribute('width',size[0]*scale);
-			canvas.setAttribute('height',size[1]*scale);
-			canvas.style.width = `${size[0]}px`;
-			canvas.style.height = `${size[1]}px`;
-			canvas.getContext('2d').scale(scale,scale);
-
-			canvas.addEventListener('mousemove',(ev)=>{
-				var x = ev.pageX - canvas.getBoundingClientRect().left + document.documentElement.scrollLeft;
-				var y = ev.pageY - canvas.getBoundingClientRect().top + document.documentElement.scrollTop;
-				jiggles = false;
-				lastMouse = [x,y];
-			});
-			canvas.addEventListener('mouseout',(ev)=>{
-				jiggles = true;
-			});
-
-			const canvasDrawer = new Canvas(canvas,{
-				style: style,
-				onDraw: onDraw
-			});
-
-			const repaint = () => {
-				text.send(
-					puppis,
-					'requestUpdate',
-					{
-						lastMouse: lastMouse,
-						jiggles: jiggles
-					}
-				)
-			}
-
-			puppis.addEventListener('message', (msg)=>{
-				text.is(
-					msg,'updateComplete',
-					(payload) => {
-						requestAnimationFrame(()=>{
-							canvasDrawer.draw({
-								stars: payload.stars,
-								lines: payload.lines
-							});
-							repaint();
-						})
-					}
-				)
-			});
-
-			repaint();
-
-			resolve({
-				$constellation: canvas
-			});
-
-		};
-
 		if (/comp|inter|loaded/.test(document.readyState)){
-			start();
+			onDOMReady(resolve,reject);
 		} else {
-			window.document.addEventListener('DOMContentLoaded',start);
+			window.document.addEventListener('DOMContentLoaded',()=>onDOMReady(resolve,reject));
 		}
 
 	});

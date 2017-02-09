@@ -3,7 +3,7 @@ import text from 'lib/text';
 
 let speed, starCount, lineCount, padding, size, style, fuzziness;
 let nodes, ships;
-let jiggles,lastMouse;
+let isJiggling,pointerPosition;
 
 let chunks = [];
 let connectedNodes = [];
@@ -67,13 +67,13 @@ const makeCoordinateList = (...coords) => {
 
 const repositionNodes = () => {
 
-	let x = lastMouse[0];
-	let y = lastMouse[1];
+	let x = pointerPosition[0];
+	let y = pointerPosition[1];
 	let localSpeed = speed.active;
 
 	nodeRenderList.map((node)=>{
 
-		if(jiggles) {
+		if(isJiggling) {
 			localSpeed = speed.passive;
 			x = node.original[0] + node._jiggle[0],
 			y = node.original[1] + node._jiggle[1]
@@ -222,8 +222,8 @@ self.onmessage = function(ev) {
 			createThings();
 			break;
 		case 'requestUpdate' :
-			jiggles = ev.data.payload.jiggles;
-			lastMouse = ev.data.payload.lastMouse;
+			isJiggling = ev.data.payload.isJiggling;
+			pointerPosition = ev.data.payload.pointerPosition;
 			repositionNodes();
 			text.send(
 				self,
