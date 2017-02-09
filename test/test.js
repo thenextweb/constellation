@@ -11,11 +11,9 @@ describe('Rendering', function() {
 		var constellationInstance = window.constellation({
 			size:[window.innerWidth,window.innerHeight],
 			canvas: document.querySelector('canvas'),
-			nodeSize: 2,
 			padding: [100,100],
 			starCount: 100,
 			lineCount: 400,
-			fuzziness: 100,
 			style: {
 				starColor: '#fff',
 				lineColor: 'rgba(255,255,255,.5)',
@@ -28,6 +26,21 @@ describe('Rendering', function() {
 			done();
 		})
 	});
+	it('should make a canvas, then render a constellation', function(done) {
+		var constellationInstance = window.constellation({
+			size:[window.innerWidth,100],
+			padding: [100,100],
+			starCount: 10,
+			lineCount: 10,
+			style: {
+				starColor: '#f0f',
+			}
+		});
+		constellationInstance.then(function(){
+			done();
+		})
+	});
+
 	after(function(){
 		if (window.callPhantom) {
 			var date = new Date()

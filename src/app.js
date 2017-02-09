@@ -30,7 +30,6 @@ const constellation = function ({
 
 
 	/*add to defaults*/
-	if(!canvas) throw 'Please specify a target canvas';
 	if(padding[0] === 0 && padding[1] === 0) padding = [fuzziness,fuzziness]
 	style = Object.assign({}, styleDefaults, style);
 
@@ -59,6 +58,11 @@ const constellation = function ({
 	return new Promise((resolve,reject)=>{
 
 		let start = () => {
+
+			if(!canvas) {
+				canvas = document.createElement('canvas');
+				document.body.appendChild(canvas);
+			}
 
 			canvas.setAttribute('width',size[0]*scale);
 			canvas.setAttribute('height',size[1]*scale);
@@ -98,7 +102,7 @@ const constellation = function ({
 					(payload) => {
 						requestAnimationFrame(()=>{
 							canvasDrawer.draw({
-								nodes: payload.nodes,
+								stars: payload.stars,
 								lines: payload.lines
 							});
 							repaint();

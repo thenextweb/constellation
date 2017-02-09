@@ -7,7 +7,8 @@ Draws cute animated canvas constellations.
   <img src="http://i.imgur.com/gLCMGoi.png">
 </p>
 
-## Usage (es6/webpack)
+
+## Usage (webpack+babel)
 Grab the code from here or npm
 
     npm install constellation-canvas --save
@@ -36,30 +37,34 @@ Then just import it and feed it some parameters. There's a full list below.
     });
 
 
-### Parameters
-
-All of them except `canvas` are optional
-
-| Name | Description |
-| --- | --- |
-| **size** (array[x,y]) | Size of the canvas |
-| **padding** (array[x,y]) | space between the canvas edges and the stars, can be negative  |
-| **canvas** (DOM element) | Canvas element to draw in |
-| **starCount** | Total number of stars |
-| **lineCount** | Total number of lines drawn between stars |
-| **speed** (object) | Object with speed options for the stars. |
-| **speed.active** | Speed when the mouse is moving the stars. |
-| **speed.passive** | Speed when the stars are jiggling. |
-| **style** (object) | Object with style options |
-| **style.starSize** | Size of the stars |
-| **style.starColor** | Color of the stars |
-| **style.starPadding** | Space between stars and lines |
-| **style.lineColor** | Color of the lines |
-| **style.lineSize** | Size of the lines |
+## Usage (browser)
+Grab the [latest release](https://github.com/lawwrr/constellation/releases) and drop it in as a script tag. `window.constellation` will appear
 
 
-### Advanced
+## Parameters
+All of them are optional but you might want to change some
 
+| Name | Type | Description |
+| --- | --- | --- |
+| **size** | `array [x,y]` | Pixel size for the canvas |
+| **padding** | `array [x,y]` | Space between the canvas edges and the stars, it can be negative to make a full background  |
+| **canvas** | `DOM element` | The canvas element to draw in. Will be created if it doesn't exist |
+| **starCount** | `number` | Total number of stars to draw |
+| **lineCount** | `number`  | Total number of lines drawn between stars |
+| <br><br>🏃‍💨 |  |  |
+| **speed** | `object` | Speed options |
+| **speed.active** | `number` | Speed when the mouse is moving the stars |
+| **speed.passive** | `number` | Speed when the stars are jiggling by themselves |
+| <br><br>👩‍🎨 |  |  |
+| **style** | `object` | Style options |
+| **style.starSize** | `number` | Size of the stars |
+| **style.starColor** | `string` | Color of the stars  |
+| **style.starPadding** | `number` | Space between stars and lines |
+| **style.lineColor** | `string` | Color of the lines |
+| **style.lineSize** | `number` | Size (line weight) of the lines |
+
+
+## Drawing things yourself
 For further customization you can also pass an `onDraw` parameter with a number of callbacks. These will allow you to take over the drawing process of the canvas.
 
     let constellation = Constellation({
@@ -83,6 +88,19 @@ For further customization you can also pass an `onDraw` parameter with a number 
         }
     });
 
+You can see how these plug together at `src/class/Canvas.js` but here's a quick chart
+
+| Callback | Description |
+| --- | --- |
+| **star**(ctx,style,star) | overrides star drawing. `star` contains the coordinates for the star to be drawn |
+| **afterStar**(ctx,style,star) | takes place after the default star drawing. `star` contains the coordinates for the star that was drawn |
+| **line**(ctx,style,line) | overrides line drawing. `line` contains the coordinates for the line to be drawn |
+| **afterLine**(ctx,style,line) | takes place after the default line drawing. `line` contains the coordinates for the line that was drawn |
+| **afterFrame**(ctx,style,objects) | takes place after drawing a full frame. `objects` contains all coordinates for stars & lines |
+
+
+### Advanced
+
 Available callbacks are `star`,`afterStar`,`line`,`afterLine`,`afterFrame`.
 
 `star` & `line` will completely override the default drawing stage while `afterStar`,`afterLine` & `afterFrame` take place after their drawing is complete
@@ -98,9 +116,3 @@ ALSO!! should you ever need it, `Constellation` will return a promise containing
     constellationInstance.then(function(data){
         console.log(data.$constellation);
     })
-
-
-## Usage (legacy)
-Consider migrating your codebase
-
-Otherwise, grab the [latest release](https://github.com/lawwrr/constellation/releases) and drop it in as a script tag. `window.constellation` will appear.

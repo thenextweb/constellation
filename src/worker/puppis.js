@@ -229,7 +229,7 @@ self.onmessage = function(ev) {
 				self,
 				'updateComplete',
 				{
-					nodes: nodeRenderList,
+					stars: nodeRenderList,
 					lines: shipRenderList
 				}
 			)
