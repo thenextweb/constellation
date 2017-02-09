@@ -18,7 +18,7 @@ Grab the code from here or npm
     git checkout git@github.com:lawwrr/constellation.git
     npm install
 
-Then just import it and feed it some parameters. It will create a random svg if it can't find any.
+Then just import it and feed it some parameters. There's a full list below.
 
     const Constellation = require('constellation-canvas');
          /*↖️ hehe it's a double const*/
