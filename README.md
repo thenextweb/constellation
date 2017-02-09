@@ -23,8 +23,8 @@ Then just import it and feed it some parameters. It will create a random svg if 
     let constellation = Constellation({
       size:[500,800],
       canvas: document.querySelector('canvas'),
-      nodesTotal: 30,
-      shipsTotal: 60,
+      starCount: 30,
+      lineCount: 60,
       style: {
         starSize: 4,
         starPadding: 5
@@ -43,8 +43,8 @@ All of them except `canvas` are optional
 | **size** (array[x,y]) | Size of the canvas |
 | **padding** (array[x,y]) | space between the canvas edges and the stars, can be negative  |
 | **canvas** (DOM element) | Canvas element to draw in |
-| **nodesTotal** | Total number of nodes |
-| **shipsTotal** | Total number of relationships between nodes |
+| **starCount** | Total number of nodes |
+| **lineCount** | Total number of relationships between nodes |
 | **speed** (object) | Object with speed options for the stars. |
 | **speed.active** | Speed when the mouse is moving the stars. |
 | **speed.passive** | Speed when the stars are jiggling. |
