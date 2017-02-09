@@ -43,8 +43,8 @@ All of them except `canvas` are optional
 | **size** (array[x,y]) | Size of the canvas |
 | **padding** (array[x,y]) | space between the canvas edges and the stars, can be negative  |
 | **canvas** (DOM element) | Canvas element to draw in |
-| **starCount** | Total number of nodes |
-| **lineCount** | Total number of relationships between nodes |
+| **starCount** | Total number of stars |
+| **lineCount** | Total number of lines drawn between stars |
 | **speed** (object) | Object with speed options for the stars. |
 | **speed.active** | Speed when the mouse is moving the stars. |
 | **speed.passive** | Speed when the stars are jiggling. |
@@ -85,7 +85,17 @@ Available callbacks are `star`,`afterStar`,`line`,`afterLine`,`afterFrame`.
 
 `star` & `line` will completely override the default drawing stage while `afterStar`,`afterLine` & `afterFrame` take place after their drawing is complete
 
-There are some extra advanced properties too
+There are some extra advanced properties too! `fuzziness` for controlling how reactive to the mouse stars are and `scale`, for drawing the canvas at a different resolution (it's @2x by default). Check out the code (i mean it's like 2? files total) to see how they work.
+
+ALSO!! should you ever need it, `Constellation` will return a promise containing `$constellation`, the canvas DOM object after everything there has been done.
+
+    let constellation = Constellation({
+        /*blah*/
+    });
+
+    constellationInstance.then(function(data){
+        console.log(data.$constellation);
+    })
 
 
 ## Usage (legacy)
