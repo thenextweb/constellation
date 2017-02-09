@@ -55,14 +55,14 @@ const constellation = function ({
 	);
 
 
-	const onDOMReady = () => {
+	const onDOMReady = (resolve,reject) => {
 
 		let isJiggling = true;
 		let pointerPosition = [0,0];
 
 		if(!canvas) {
 			canvas = document.createElement('canvas');
-			document.body.appendChild(canv);
+			document.body.appendChild(canvas);
 		}
 
 		canvas.setAttribute('width',size[0]*scale);
@@ -124,9 +124,9 @@ const constellation = function ({
 	return new Promise((resolve,reject)=>{
 
 		if (/comp|inter|loaded/.test(document.readyState)){
-			onDOMReady();
+			onDOMReady(resolve,reject);
 		} else {
-			window.document.addEventListener('DOMContentLoaded',onDOMReady);
+			window.document.addEventListener('DOMContentLoaded',()=>onDOMReady(resolve,reject));
 		}
 
 	});
