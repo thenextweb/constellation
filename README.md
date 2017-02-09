@@ -7,7 +7,8 @@ Draws cute animated canvas constellations.
   <img src="http://i.imgur.com/gLCMGoi.png">
 </p>
 
-## Usage (es6/webpack)
+
+## Usage (webpack+babel)
 Grab the code from here or npm
 
     npm install constellation-canvas --save
@@ -36,29 +37,32 @@ Then just import it and feed it some parameters. It will create a random svg if 
     });
 
 
-### Parameters
+## Usage (browser)
+Grab the [latest release](https://github.com/lawwrr/constellation/releases) and drop it in as a script tag. `window.constellation` will appear
 
+
+## Parameters
 All of them except `canvas` are optional
 
-| Name | Description |
-| --- | --- |
-| **size** (array[x,y]) | Size of the canvas |
-| **padding** (array[x,y]) | space between the canvas edges and the stars, can be negative  |
-| **canvas** (DOM element) | Canvas element to draw in |
-| **starCount** | Total number of stars |
-| **lineCount** | Total number of lines drawn between stars |
-| **speed** (object) | Object with speed options for the stars. |
-| **speed.active** | Speed when the mouse is moving the stars. |
-| **speed.passive** | Speed when the stars are jiggling. |
-| **style** (object) | Object with style options |
-| **style.starSize** | Size of the stars |
-| **style.starColor** | Color of the stars |
-| **style.starPadding** | Space between stars and lines |
-| **style.lineColor** | Color of the lines |
-| **style.lineSize** | Size of the lines |
+| Name | Type | Description |
+| --- | --- | --- |
+| **size** | `(array[x,y])` | Size of the canvas |
+| **padding** | `(array[x,y])` | space between the canvas edges and the stars, can be negative  |
+| **canvas** | `(DOM element)` | Canvas element to draw in |
+| **starCount** | `number` | Total number of stars |
+| **lineCount** | `number`  | Total number of lines drawn between stars |
+| **speed** (object) | `object` | Object with speed options for the stars. |
+| **speed.active** |  | Speed when the mouse is moving the stars. |
+| **speed.passive** |  | Speed when the stars are jiggling. |
+| **style** | `(object)` | Object with style options |
+| **style.starSize** |  | Size of the stars |
+| **style.starColor** |  | Color of the stars |
+| **style.starPadding** |  | Space between stars and lines |
+| **style.lineColor** |  | Color of the lines |
+| **style.lineSize** |  | Size of the lines |
 
 
-### Drawing things yourself
+## Drawing things yourself
 For further customization you can also pass an `onDraw` parameter with a number of callbacks. These will allow you to take over the drawing process of the canvas.
 
     let constellation = Constellation({
@@ -82,7 +86,7 @@ For further customization you can also pass an `onDraw` parameter with a number 
         }
     });
 
-YOu can see how these plug together at `src/class/Canvas.js` but here's a quick chart
+You can see how these plug together at `src/class/Canvas.js` but here's a quick chart
 
 | Callback | Description |
 | --- | --- |
@@ -91,7 +95,6 @@ YOu can see how these plug together at `src/class/Canvas.js` but here's a quick 
 | **line**(ctx,style,line) | overrides line drawing. `line` contains the coordinates for the line to be drawn |
 | **afterLine**(ctx,style,line) | takes place after the default line drawing. `line` contains the coordinates for the line that was drawn |
 | **afterFrame**(ctx,style,objects) | takes place after drawing a full frame. `objects` contains all coordinates for stars & lines |
-
 
 
 ### Advanced
@@ -111,9 +114,3 @@ ALSO!! should you ever need it, `Constellation` will return a promise containing
     constellationInstance.then(function(data){
         console.log(data.$constellation);
     })
-
-
-## Usage (legacy)
-Consider migrating your codebase
-
-Otherwise, grab the [latest release](https://github.com/lawwrr/constellation/releases) and drop it in as a script tag. `window.constellation` will appear.
