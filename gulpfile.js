@@ -1,10 +1,13 @@
-var gulp = require('gulp');
-var webpack = require('webpack-stream');
-var uglify = require('gulp-uglify');
-var path = require('path');
-var mochaPhantomJS = require('gulp-mocha-phantomjs');
-var WrapperPlugin = require('wrapper-webpack-plugin');
-var release = require('gulp-github-release');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const webpack = require('webpack-stream');
+const uglify = require('gulp-uglify');
+const path = require('path');
+const fs = require('fs-extra');
+const mochaPhantomJS = require('gulp-mocha-phantomjs');
+const WrapperPlugin = require('wrapper-webpack-plugin');
+const release = require('gulp-github-release');
+const through = require('through2');
 
 var webpackModule = {
 	loaders: [
@@ -25,10 +28,18 @@ var webpackModule = {
 	]
 };
 
-gulp.task('test', function () {
+gulp.task('clean', () => {
+	['dist','temp','temp/screenshots'].map((dir)=>{
+		fs.removeSync(dir);
+		fs.mkdirSync(dir);
+	})
+});
+
+gulp.task('test', ['make'], function () {
 	return gulp
 	.src('test/index.html')
 	.pipe(mochaPhantomJS({
+		reporter: 'nyan',
 		suppressStderr: false,
 		phantomjs: {
 			viewportSize: {
@@ -40,7 +51,37 @@ gulp.task('test', function () {
 				localToRemoteUrlAccessEnabled: true
 			}
 		}
-	}));
+	}))
+	.pipe(through.obj((chunk, enc, cb) => {
+
+		const screenshotPath = 'temp/screenshots/';
+		const screenshots = fs.readdirSync(screenshotPath);
+
+		let uploadCount = 0;
+		const isDoneMaybe = () => {
+			uploadCount++;
+			if(uploadCount >= screenshots.length) {
+				cb(null, chunk);
+			}
+		}
+
+		screenshots.map((screenshot)=>{
+
+			let spawn = require('child_process').spawn;
+			let child = spawn('curl',[
+				'--upload-file',
+				`./${screenshotPath+screenshot}`,
+				'https://transfer.sh/'
+			]);
+
+			child.stdout.on('data', (buffer) => {
+				gutil.log('Look at it!!!', gutil.colors.magenta(buffer.toString().replace("\n",'')));
+			});
+			child.stdout.on('end', isDoneMaybe);
+
+		});
+
+	}))
 });
 
 gulp.task('default', function() {
@@ -69,7 +110,7 @@ gulp.task('default', function() {
 		.pipe(gulp.dest('dist/'));
 });
 
-gulp.task('make', function() {
+gulp.task('make', ['clean'], function() {
 	return gulp.src('src/app.js')
 		.pipe(webpack({
 			output: {
