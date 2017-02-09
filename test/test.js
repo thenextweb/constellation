@@ -12,7 +12,6 @@ describe('Rendering', function() {
 			size:[window.innerWidth,window.innerHeight],
 			canvas: document.querySelector('canvas'),
 			nodeSize: 2,
-			nodePadding: 1,
 			padding: [100,100],
 			nodesTotal: 100,
 			shipsTotal: 400,
@@ -21,7 +20,7 @@ describe('Rendering', function() {
 				starColor: '#fff',
 				lineColor: 'rgba(255,255,255,.5)',
 				lineSize: .5,
-				starPadding: 0,
+				starPadding: 5,
 				starSize: 2
 			}
 		});

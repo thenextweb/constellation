@@ -1,6 +1,6 @@
 import random from 'lib/random';
 
-let speed, nodesTotal, shipsTotal, padding, size, style, fuzziness;
+let speed, starsTotal, shipsTotal, padding, size, style, fuzziness;
 let nodes, ships;
 let jiggles,lastMouse;
 
@@ -131,7 +131,7 @@ const createThings = () => {
 
 	nodes = (() => {
 		let nodes = [];
-		for(let i = 0;i < nodesTotal;i++) {
+		for(let i = 0;i < starsTotal;i++) {
 			nodes.push({
 				pos: makeNode()
 			});
@@ -212,7 +212,7 @@ self.onmessage = function(ev) {
 	switch(ev.data.body) {
 		case 'sendParameters' :
 			speed = ev.data.payload.speed;
-			nodesTotal = ev.data.payload.nodesTotal;
+			starsTotal = ev.data.payload.starsTotal;
 			shipsTotal = ev.data.payload.shipsTotal;
 			padding = ev.data.payload.padding;
 			size = ev.data.payload.size;
