@@ -90,7 +90,6 @@ const constellation = function ({
 						jiggles: jiggles
 					}
 				)
-				requestAnimationFrame(repaint)
 			}
 
 			puppis.addEventListener('message', (msg)=>{
@@ -102,6 +101,7 @@ const constellation = function ({
 								nodes: payload.nodes,
 								lines: payload.lines
 							});
+							repaint();
 						})
 					}
 				)
