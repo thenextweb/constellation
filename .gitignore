@@ -1,7 +1,5 @@
 node_modules/*
 
-npm-debug.log
-
 dist/*
 !dist/.gitexists
 
@@ -9,3 +7,4 @@ test/screenshots/*
 !test/screenshots/.gitexists
 
 .DS_store
+*.log
