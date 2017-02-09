@@ -13,8 +13,8 @@ describe('Rendering', function() {
 			canvas: document.querySelector('canvas'),
 			nodeSize: 2,
 			padding: [100,100],
-			nodesTotal: 100,
-			shipsTotal: 400,
+			starCount: 100,
+			lineCount: 400,
 			fuzziness: 100,
 			style: {
 				starColor: '#fff',
