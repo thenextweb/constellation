@@ -1,4 +1,5 @@
 import random from 'lib/random';
+import text from 'lib/text';
 
 let speed, starCount, lineCount, padding, size, style, fuzziness;
 let nodes, ships;
@@ -224,13 +225,14 @@ self.onmessage = function(ev) {
 			jiggles = ev.data.payload.jiggles;
 			lastMouse = ev.data.payload.lastMouse;
 			repositionNodes();
-			self.postMessage({
-				body: 'updateComplete',
-				payload: {
+			text.send(
+				self,
+				'updateComplete',
+				{
 					nodes: nodeRenderList,
 					lines: shipRenderList
 				}
-			});
+			)
 			break;
 	}
 }
