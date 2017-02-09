@@ -44,8 +44,7 @@ describe('Rendering', function() {
 	after(function(){
 		if (window.callPhantom) {
 			var date = new Date()
-			var filename = "test/screenshots/" + date.getTime()
-			console.log("Taking screenshot " + filename)
+			var filename = "temp/screenshots/" + date.getTime()
 			callPhantom({'screenshot': filename})
 		}
 	})
