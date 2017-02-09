@@ -23,9 +23,9 @@ Grab the code from here or npm
 Then just import it and feed it some parameters. There's a full list below.
 
     const Constellation = require('constellation-canvas');
-         /*↖️ hehe it's a double const*/
 
-    let constellation = Constellation({
+    /* hehehehe */
+    const ellation = new Constellation({
         size:[500,800],
         canvas: document.querySelector('canvas'),
         starCount: 30,
