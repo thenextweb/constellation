@@ -42,24 +42,24 @@ Grab the [latest release](https://github.com/lawwrr/constellation/releases) and 
 
 
 ## Parameters
-All of them except `canvas` are optional
+All of them are optional but you might want to change some
 
 | Name | Type | Description |
 | --- | --- | --- |
-| **size** | `(array[x,y])` | Size of the canvas |
-| **padding** | `(array[x,y])` | space between the canvas edges and the stars, can be negative  |
-| **canvas** | `(DOM element)` | Canvas element to draw in |
-| **starCount** | `number` | Total number of stars |
+| **size** | `(array[x,y])` | Pixel size for the canvas |
+| **padding** | `(array[x,y])` | Space between the canvas edges and the stars, it can be negative to make a full background  |
+| **canvas** | `(DOM element)` | The canvas element to draw in. Will be created if it doesn't exist |
+| **starCount** | `number` | Total number of stars to draw |
 | **lineCount** | `number`  | Total number of lines drawn between stars |
-| **speed** (object) | `object` | Object with speed options for the stars. |
-| **speed.active** |  | Speed when the mouse is moving the stars. |
-| **speed.passive** |  | Speed when the stars are jiggling. |
-| **style** | `(object)` | Object with style options |
-| **style.starSize** |  | Size of the stars |
-| **style.starColor** |  | Color of the stars |
-| **style.starPadding** |  | Space between stars and lines |
-| **style.lineColor** |  | Color of the lines |
-| **style.lineSize** |  | Size of the lines |
+| **speed** (object) | `object` | Speed options |
+| **speed.active** |  | Speed when the mouse is moving the stars |
+| **speed.passive** |  | Speed when the stars are jiggling by themselves |
+| **style** | `(object)` | Style options |
+| **style.starSize** | `number` | Size of the stars |
+| **style.starColor** | `string` | Color of the stars  |
+| **style.starPadding** | `number` | Space between stars and lines |
+| **style.lineColor** | `string` | Color of the lines |
+| **style.lineSize** | `number` | Size (line weight) of the lines |
 
 
 ## Drawing things yourself
