@@ -51,9 +51,11 @@ All of them are optional but you might want to change some
 | **canvas** | `(DOM element)` | The canvas element to draw in. Will be created if it doesn't exist |
 | **starCount** | `number` | Total number of stars to draw |
 | **lineCount** | `number`  | Total number of lines drawn between stars |
-| **speed** (object) | `object` | Speed options |
-| **speed.active** |  | Speed when the mouse is moving the stars |
-| **speed.passive** |  | Speed when the stars are jiggling by themselves |
+| --- | --- | --- |
+| **speed** | `object` | Speed options |
+| **speed.active** | `number` | Speed when the mouse is moving the stars |
+| **speed.passive** | `number` | Speed when the stars are jiggling by themselves |
+| --- | --- | --- |
 | **style** | `(object)` | Style options |
 | **style.starSize** | `number` | Size of the stars |
 | **style.starColor** | `string` | Color of the stars  |
