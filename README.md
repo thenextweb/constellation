@@ -23,15 +23,15 @@ Then just import it and feed it some parameters. It will create a random svg if 
          /*↖️ hehe it's a double const*/
 
     let constellation = Constellation({
-      size:[500,800],
-      canvas: document.querySelector('canvas'),
-      starCount: 30,
-      lineCount: 60,
-      style: {
-        starSize: 4,
-        starPadding: 5
-        lineSize: 2
-      }
+        size:[500,800],
+        canvas: document.querySelector('canvas'),
+        starCount: 30,
+        lineCount: 60,
+        style: {
+            starSize: 4,
+            starPadding: 5
+            lineSize: 2
+        }
 
     });
 
@@ -66,20 +66,20 @@ For further customization you can also pass an `onDraw` parameter with a number 
         size:[500,800],
         canvas: document.querySelector('canvas'),
         onDraw: {
-          afterStar: (ctx,node,style) => {
-            ctx.beginPath();
-            ctx.arc(
-              node.pos[0], node.pos[1], style.starSize,0, 2 * Math.PI
-            );
-            ctx.globalCompositeOperation = 'destination-over';
-            ctx.fillStyle = 'rgba(0,0,0,0)';
-            ctx.shadowColor = '#999';
-            ctx.shadowBlur = 20;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 15;
-            ctx.closePath();
-            ctx.fill();
-          }
+            afterStar: (ctx,node,style) => {
+                ctx.beginPath();
+                ctx.arc(
+                    node.pos[0], node.pos[1], style.starSize,0, 2 * Math.PI
+                );
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = 'rgba(0,0,0,0)';
+                ctx.shadowColor = '#999';
+                ctx.shadowBlur = 20;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 15;
+                ctx.closePath();
+                ctx.fill();
+            }
         }
     });
 
