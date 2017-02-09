@@ -1,5 +1,7 @@
-# constellation
-Draws cute moving canvas constellations. [See it in action here!](https://lawwrr.github.io/constellation/)
+# constellation-canvas
+Draws cute animated canvas constellations.
+
+[See it in action here!](https://lawwrr.github.io/constellation/)
 
 <p align="center">
   <img src="http://i.imgur.com/gLCMGoi.png">
