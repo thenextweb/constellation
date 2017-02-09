@@ -98,7 +98,7 @@ const constellation = function ({
 					(payload) => {
 						requestAnimationFrame(()=>{
 							canvasDrawer.draw({
-								nodes: payload.nodes,
+								stars: payload.stars,
 								lines: payload.lines
 							});
 							repaint();

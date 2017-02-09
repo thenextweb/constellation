@@ -58,8 +58,7 @@ All of them except `canvas` are optional
 | **style.lineSize** | Size of the lines |
 
 
-### Advanced
-
+### Drawing things yourself
 For further customization you can also pass an `onDraw` parameter with a number of callbacks. These will allow you to take over the drawing process of the canvas.
 
     let constellation = Constellation({
@@ -82,6 +81,20 @@ For further customization you can also pass an `onDraw` parameter with a number 
             }
         }
     });
+
+YOu can see how these plug together at `src/class/Canvas.js` but here's a quick chart
+
+| Callback | Description |
+| --- | --- |
+| **star**(ctx,style,star) | overrides star drawing. `star` contains the coordinates for the star to be drawn |
+| **afterStar**(ctx,style,star) | takes place after the default star drawing. `star` contains the coordinates for the star that was drawn |
+| **line**(ctx,style,line) | overrides line drawing. `line` contains the coordinates for the line to be drawn |
+| **afterLine**(ctx,style,line) | takes place after the default line drawing. `line` contains the coordinates for the line that was drawn |
+| **afterFrame**(ctx,style,objects) | takes place after drawing a full frame. `objects` contains all coordinates for stars & lines |
+
+
+
+### Advanced
 
 Available callbacks are `star`,`afterStar`,`line`,`afterLine`,`afterFrame`.
 
