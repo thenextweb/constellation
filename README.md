@@ -46,9 +46,9 @@ All of them are optional but you might want to change some
 
 | Name | Type | Description |
 | --- | --- | --- |
-| **size** | `(array[x,y])` | Pixel size for the canvas |
-| **padding** | `(array[x,y])` | Space between the canvas edges and the stars, it can be negative to make a full background  |
-| **canvas** | `(DOM element)` | The canvas element to draw in. Will be created if it doesn't exist |
+| **size** | `array [x,y]` | Pixel size for the canvas |
+| **padding** | `array [x,y]` | Space between the canvas edges and the stars, it can be negative to make a full background  |
+| **canvas** | `DOM element` | The canvas element to draw in. Will be created if it doesn't exist |
 | **starCount** | `number` | Total number of stars to draw |
 | **lineCount** | `number`  | Total number of lines drawn between stars |
 | <br><br>🏃‍💨 |  |  |
@@ -56,7 +56,7 @@ All of them are optional but you might want to change some
 | **speed.active** | `number` | Speed when the mouse is moving the stars |
 | **speed.passive** | `number` | Speed when the stars are jiggling by themselves |
 | <br><br>👩‍🎨 |  |  |
-| **style** | `(object)` | Style options |
+| **style** | `object` | Style options |
 | **style.starSize** | `number` | Size of the stars |
 | **style.starColor** | `string` | Color of the stars  |
 | **style.starPadding** | `number` | Space between stars and lines |
