@@ -1,7 +1,7 @@
 # constellation-canvas
 Draws cute animated canvas constellations.
 
-[See it in action here!](https://lawwrr.github.io/constellation/)
+[See it in action here!](https://walaura.github.io/constellation/)
 
 <p align="center">
   <img src="http://i.imgur.com/gLCMGoi.png">
@@ -17,14 +17,13 @@ Grab the code from here or npm
 
     #or#
 
-    git checkout git@github.com:lawwrr/constellation.git
+    git checkout git@github.com:walaura/constellation.git
     npm install
 
 Then just import it and feed it some parameters. There's a full list below.
 
-    const Constellation = require('constellation-canvas');
+    import Constellation from 'constellation-canvas';
 
-    /* hehehehe */
     const ellation = new Constellation({
         size:[500,800],
         canvas: document.querySelector('canvas'),
@@ -115,7 +114,7 @@ There are some extra advanced properties too! `fuzziness` for controlling how re
 
 ALSO!! should you ever need it, `Constellation` will return a promise containing `$constellation`, the canvas DOM object after everything there has been done.
 
-    let constellation = Constellation({
+    const constellation = Constellation({
         /*blah*/
     });
 
