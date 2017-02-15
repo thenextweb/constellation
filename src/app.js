@@ -2,32 +2,17 @@ import Canvas from 'class/Canvas';
 import Puppis from 'worker-loader?inline!./worker/puppis.js';
 
 import text from 'lib/text';
-
-
-const defaults = {
-	style: {
-		starSize: 4,
-		starPadding: 5,
-		starColor: '#000',
-		lineColor: 'rgba(0,0,0,.5)',
-		lineSize: 2
-	},
-	speed: {
-		active: .125,
-		passive: .075
-	}
-}
+import config from 'conf';
 
 
 const constellation = function ({
-	size = [400,400],
-	element = undefined,
-	canvas = undefined,
-	starCount = 30,
-	lineCount = 70,
-	fuzziness = 100,
-	padding = [0,0],
-	scale = 2,
+	size = config.defaults.size,
+	canvas = config.defaults.canvas,
+	starCount = config.defaults.starCount,
+	lineCount = config.defaults.lineCount,
+	fuzziness = config.defaults.fuzziness,
+	padding = config.defaults.padding,
+	scale = config.defaults.scale,
 	style = {},
 	speed = {},
 	onDraw = {}
@@ -35,8 +20,8 @@ const constellation = function ({
 
 
 	if(padding[0] === 0 && padding[1] === 0) padding = [fuzziness,fuzziness]
-	style = Object.assign({}, defaults.style, style);
-	speed = Object.assign({}, defaults.speed, speed);
+	style = Object.assign({}, config.defaults.style, style);
+	speed = Object.assign({}, config.defaults.speed, speed);
 
 
 	const puppis = new Puppis();
