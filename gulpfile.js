@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const gutil = require('gulp-util');
 const webpack = require('webpack-stream');
 const uglify = require('gulp-uglify');
+const header = require('gulp-header');
 const path = require('path');
 const fs = require('fs-extra');
 const mochaPhantomJS = require('gulp-mocha-phantomjs');
@@ -9,24 +10,29 @@ const WrapperPlugin = require('wrapper-webpack-plugin');
 const release = require('gulp-github-release');
 const through = require('through2');
 
-var webpackModule = {
-	loaders: [
-		{
-			test: /\.css$/, loader: "raw"
-		},
-		{
-			test: /\.mustache$/, loader: "raw"
-		},
-		{
-			test: /.js?$/,
-			loader: 'babel-loader',
-			query: {
-				presets: ['es2015'],
-				plugins: ["transform-object-assign"]
+const config = require('./src/conf.js');
+
+
+const webpackConfig = {
+	module: {
+		loaders: [
+			{
+				test: /.js?$/,
+				loader: 'babel-loader',
+				query: {
+					presets: ['es2015'],
+					plugins: ['transform-object-assign']
+				}
 			}
-		}
+		]
+	},
+	plugins: [
+		new webpack.webpack.ProvidePlugin({
+			Promise: 'es6-promise-promise'
+		})
 	]
 };
+
 
 gulp.task('clean', () => {
 	['dist','temp','temp/screenshots'].map((dir)=>{
@@ -34,6 +40,7 @@ gulp.task('clean', () => {
 		fs.mkdirSync(dir);
 	})
 });
+
 
 gulp.task('test', ['make'], function () {
 	return gulp
@@ -84,59 +91,50 @@ gulp.task('test', ['make'], function () {
 	}))
 });
 
+
 gulp.task('default', function() {
 	return gulp.src('src/app.js')
 		.pipe(webpack({
 			watch: true,
 			devtool: 'source-map',
 			output: {
-				filename: 'constellation.js',
-				library: 'constellation',
+				filename: config.webpack.filename.dev,
+				library: config.webpack.library,
 				libraryTarget: 'umd'
 			},
-			plugins: [
-				new webpack.webpack.ProvidePlugin({
-					Promise: 'es6-promise-promise'
-				}),
-				new WrapperPlugin({
-					header: '/* ✨ constellation ✨ – dev – https://github.com/lawwrr/constellation  */'
-				})
-			],
-			module: webpackModule,
+			plugins: webpackConfig.plugins,
+			module: webpackConfig.module,
 			resolve: {
 				root: path.resolve('./src')
 			}
 		}))
+		.pipe(header(config.webpack.header+"\n"))
 		.pipe(gulp.dest('dist/'));
 });
+
 
 gulp.task('make', ['clean'], function() {
 	return gulp.src('src/app.js')
 		.pipe(webpack({
 			output: {
-				filename: 'constellation.min.js',
-				library: 'constellation',
+				filename: config.webpack.filename.dist,
+				library: config.webpack.library,
 				libraryTarget: 'umd'
 			},
-			plugins: [
-				new webpack.webpack.ProvidePlugin({
-					Promise: 'es6-promise-promise'
-				}),
-				new WrapperPlugin({
-				  header: '/* ✨ constellation ✨ – https://github.com/lawwrr/constellation */'
-				})
-			],
-			module: webpackModule,
+			plugins: webpackConfig.plugins,
+			module: webpackConfig.module,
 			resolve: {
 				root: path.resolve('./src')
 			}
 		}))
 		.pipe(uglify())
+		.pipe(header(config.webpack.header+"\n"))
 		.pipe(gulp.dest('dist/'))
 })
 
+
 gulp.task('release', function(){
-	return gulp.src('dist/constellation.min.js')
+	return gulp.src('dist/'+config.webpack.filename.dist)
 		.pipe(release({
 			manifest: require('./package.json')
 		}).on('error',function(e){
