@@ -5,10 +5,7 @@ const uglify = require('gulp-uglify');
 const header = require('gulp-header');
 const path = require('path');
 const fs = require('fs-extra');
-const mochaPhantomJS = require('gulp-mocha-phantomjs');
 const WrapperPlugin = require('wrapper-webpack-plugin');
-const release = require('gulp-github-release');
-const through = require('through2');
 
 const config = require('./src/conf.js');
 
@@ -43,6 +40,10 @@ gulp.task('clean', () => {
 
 
 gulp.task('test', ['make'], function () {
+
+	const through = require('through2');
+	const mochaPhantomJS = require('gulp-mocha-phantomjs');
+
 	return gulp
 	.src('test/index.html')
 	.pipe(mochaPhantomJS({
@@ -134,6 +135,9 @@ gulp.task('make', ['clean'], function() {
 
 
 gulp.task('release', function(){
+
+	const release = require('gulp-github-release');
+
 	return gulp.src('dist/'+config.webpack.filename.dist)
 		.pipe(release({
 			manifest: require('./package.json')
