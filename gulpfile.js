@@ -23,6 +23,10 @@ const webpackConfig = {
 			}
 		]
 	},
+	resolve: {
+		modulesDirectories: ['node_modules', 'bower_components'],
+		extensions: ['', '.js', '.jsx']
+	},
 	plugins: [
 		new webpack.webpack.ProvidePlugin({
 			Promise: 'es6-promise-promise'
