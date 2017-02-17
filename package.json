@@ -41,7 +41,7 @@
     "javascript"
   ],
   "license": "GPL-3.0",
-  "main": "./src/app.js",
+  "main": "./dist/constellation.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/walaura/constellation"
