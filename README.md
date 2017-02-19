@@ -41,7 +41,7 @@ Then just import it and feed it some parameters. There's a full list below.
 
 
 ## Usage (browser)
-Grab the [latest release](https://github.com/lawwrr/constellation/releases) and drop it in as a script tag. `window.constellation` will appear
+Grab the [latest release](https://github.com/walaura/constellation/releases) and drop it in as a script tag. `window.constellation` will appear
 
 
 
