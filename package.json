@@ -1,7 +1,7 @@
 {
   "name": "constellation-canvas",
   "description": "draws cute animated canvas constellations",
-  "version": "1.4.3",
+  "version": "1.5.2",
   "author": "Laura mayhem",
   "bugs": {
     "url": "https://github.com/walaura/constellation/issues",
@@ -40,7 +40,7 @@
     "frontend",
     "javascript"
   ],
-  "license": "GPL-3.0",
+  "license": "ISC",
   "main": "./dist/constellation.min.js",
   "repository": {
     "type": "git",
