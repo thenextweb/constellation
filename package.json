@@ -28,6 +28,7 @@
     "wrapper-webpack-plugin": "0.1.11"
   },
   "devDependencies": {
+    "eslint": "^3.16.1",
     "gulp-github-release": "^1.2.0",
     "mocha": "^3.2.0",
     "mocha-phantomjs": "^4.1.0",
@@ -49,6 +50,7 @@
   "scripts": {
     "gulp": "./node_modules/.bin/gulp",
     "install": "gulp make",
+    "eslint": "eslint --ignore-path .gitignore .",
     "release": "npm publish && npm install && gulp release",
     "test": "gulp test"
   }

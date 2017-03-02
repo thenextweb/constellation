@@ -19,7 +19,7 @@ const constellation = function ({
 } = {}) {
 
 
-	if(padding[0] === 0 && padding[1] === 0) padding = [fuzziness,fuzziness]
+	if(padding[0] === 0 && padding[1] === 0) padding = [fuzziness,fuzziness];
 	style = Object.assign({}, config.defaults.style, style);
 	speed = Object.assign({}, config.defaults.speed, speed);
 
@@ -40,7 +40,7 @@ const constellation = function ({
 	);
 
 
-	const onDOMReady = (resolve,reject) => {
+	const onDOMReady = (resolve) => {
 
 		let isJiggling = true;
 		let pointerPosition = [0,0];
@@ -62,7 +62,7 @@ const constellation = function ({
 			isJiggling = false;
 			pointerPosition = [x,y];
 		});
-		canvas.addEventListener('mouseout',(ev)=>{
+		canvas.addEventListener('mouseout',()=>{
 			isJiggling = true;
 		});
 
@@ -79,10 +79,10 @@ const constellation = function ({
 					pointerPosition: pointerPosition,
 					isJiggling: isJiggling
 				}
-			)
-		}
+			);
+		};
 
-		puppis.addEventListener('message', (msg)=>{
+		puppis.addEventListener('message', msg => {
 			text.is(
 				msg,'updateComplete',
 				(payload) => {
@@ -92,9 +92,9 @@ const constellation = function ({
 							lines: payload.lines
 						});
 						repaint();
-					})
+					});
 				}
-			)
+			);
 		});
 
 		repaint();
