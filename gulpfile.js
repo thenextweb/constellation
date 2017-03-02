@@ -5,7 +5,6 @@ const uglify = require('gulp-uglify');
 const header = require('gulp-header');
 const path = require('path');
 const fs = require('fs-extra');
-const WrapperPlugin = require('wrapper-webpack-plugin');
 
 const config = require('./src/conf.js');
 
@@ -39,7 +38,7 @@ gulp.task('clean', () => {
 	['dist','temp','temp/screenshots'].map((dir)=>{
 		fs.removeSync(dir);
 		fs.mkdirSync(dir);
-	})
+	});
 });
 
 
@@ -75,7 +74,7 @@ gulp.task('test', ['make'], function () {
 			if(uploadCount >= screenshots.length) {
 				cb(null, chunk);
 			}
-		}
+		};
 
 		screenshots.map((screenshot)=>{
 
@@ -87,13 +86,13 @@ gulp.task('test', ['make'], function () {
 			]);
 
 			child.stdout.on('data', (buffer) => {
-				gutil.log('Look at it!!!', gutil.colors.magenta(buffer.toString().replace("\n",'')));
+				gutil.log('Look at it!!!', gutil.colors.magenta(buffer.toString().replace('\n','')));
 			});
 			child.stdout.on('end', isDoneMaybe);
 
 		});
 
-	}))
+	}));
 });
 
 
@@ -113,7 +112,7 @@ gulp.task('default', function() {
 				root: path.resolve('./src')
 			}
 		}))
-		.pipe(header(config.webpack.header+"\n"))
+		.pipe(header(config.webpack.header+'\n'))
 		.pipe(gulp.dest('dist/'));
 });
 
@@ -133,9 +132,9 @@ gulp.task('make', ['clean'], function() {
 			}
 		}))
 		.pipe(uglify())
-		.pipe(header(config.webpack.header+"\n"))
-		.pipe(gulp.dest('dist/'))
-})
+		.pipe(header(config.webpack.header+'\n'))
+		.pipe(gulp.dest('dist/'));
+});
 
 
 gulp.task('release', function(){
@@ -146,7 +145,8 @@ gulp.task('release', function(){
 		.pipe(release({
 			manifest: require('./package.json')
 		}).on('error',function(e){
+			console.error(e);
 			this.emit('end');
-		}))
+		}));
 
 });

@@ -7,7 +7,7 @@ export default {
 	},
 	is: (msg,body,cb) => {
 		if(msg.data.body === body) {
-			cb(msg.data.payload)
+			cb(msg.data.payload);
 		}
 	}
-}
+};

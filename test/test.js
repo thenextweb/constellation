@@ -1,8 +1,8 @@
 describe('Initialization', function() {
 	it('window.constellation should exist',function(done){
 		if(window.constellation) done();
-		else done(new Error())
-	})
+		else done(new Error());
+	});
 });
 
 describe('Rendering', function() {
@@ -25,7 +25,7 @@ describe('Rendering', function() {
 		});
 		constellationInstance.then(function(){
 			done();
-		})
+		});
 	});
 	it('should make a canvas, then render a constellation', function(done) {
 		var constellationInstance = window.constellation({
@@ -39,14 +39,14 @@ describe('Rendering', function() {
 		});
 		constellationInstance.then(function(){
 			done();
-		})
+		});
 	});
 
 	after(function(){
 		if (window.callPhantom) {
-			var date = new Date()
-			var filename = "temp/screenshots/" + date.getTime()
-			callPhantom({'screenshot': filename})
+			var date = new Date();
+			var filename = 'temp/screenshots/' + date.getTime();
+			window.callPhantom({'screenshot': filename});
 		}
-	})
+	});
 });

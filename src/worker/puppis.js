@@ -24,7 +24,7 @@ const makeNode = (tries=500) => {
 		return Math.ceil(
 			Math.random()*(localsize - localPadding*2) + localPadding
 		);
-	}
+	};
 	let node = [makeDimension('x'),makeDimension('y')];
 	let chunk = JSON.stringify([
 		Math.ceil(node[0]/size[0]*(size[0]/style.starSize/10)),
@@ -37,7 +37,7 @@ const makeNode = (tries=500) => {
 		chunks.push(chunk);
 		return node;
 	}
-}
+};
 
 const makeShip = (faves,force=false) => {
 	let start,end;
@@ -63,7 +63,7 @@ const makeCoordinateList = (...coords) => {
 		pos: [...coords],
 		original: [...coords]
 	};
-}
+};
 
 const repositionNodes = () => {
 
@@ -76,7 +76,7 @@ const repositionNodes = () => {
 		if(isJiggling) {
 			localSpeed = speed.passive;
 			x = node.original[0] + node._jiggle[0],
-			y = node.original[1] + node._jiggle[1]
+			y = node.original[1] + node._jiggle[1];
 		}
 
 		if(
@@ -93,16 +93,16 @@ const repositionNodes = () => {
 			let displacement = [];
 
 			if(fromCenter[0] > 0) {
-				displacement[0] = node._previousTransform[0] + localSpeed - (node._previousTransform[0]/fuzziness)*localSpeed
+				displacement[0] = node._previousTransform[0] + localSpeed - (node._previousTransform[0]/fuzziness)*localSpeed;
 			}
 			else {
-				displacement[0] = node._previousTransform[0] - localSpeed + (node._previousTransform[0]*-1/fuzziness)*localSpeed
+				displacement[0] = node._previousTransform[0] - localSpeed + (node._previousTransform[0]*-1/fuzziness)*localSpeed;
 			}
 			if(fromCenter[1] > 0) {
-				displacement[1]= node._previousTransform[1] + localSpeed - (node._previousTransform[1]/fuzziness)*localSpeed
+				displacement[1]= node._previousTransform[1] + localSpeed - (node._previousTransform[1]/fuzziness)*localSpeed;
 			}
 			else {
-				displacement[1] = node._previousTransform[1] - localSpeed + (node._previousTransform[1]*-1/fuzziness)*localSpeed
+				displacement[1] = node._previousTransform[1] - localSpeed + (node._previousTransform[1]*-1/fuzziness)*localSpeed;
 			}
 
 			node._previousTransform = displacement;
@@ -111,14 +111,14 @@ const repositionNodes = () => {
 			node.pos[1] = node.original[1] + node._previousTransform[1];
 
 			if(shipOrderedList.end[node._posAsString]) {
-				for (var i = 0, len = shipOrderedList.end[node._posAsString].length; i < len; i++) {
+				for (let i = 0, len = shipOrderedList.end[node._posAsString].length; i < len; i++) {
 					let line = shipOrderedList.end[node._posAsString][i];
 					line.pos[2] = line.original[2]+node._previousTransform[0];
 					line.pos[3] = line.original[3]+node._previousTransform[1];
 				}
 			}
 			if(shipOrderedList.start[node._posAsString]) {
-				for (var i = 0, len = shipOrderedList.start[node._posAsString].length; i < len; i++) {
+				for (let i = 0, len = shipOrderedList.start[node._posAsString].length; i < len; i++) {
 					let line = shipOrderedList.start[node._posAsString][i];
 					line.pos[0] = line.original[0]+node._previousTransform[0];
 					line.pos[1] = line.original[1]+node._previousTransform[1];
@@ -157,18 +157,18 @@ const createThings = () => {
 						}
 					});
 				}
-			})
+			});
 			distances.sort((a,b)=>{
-				return a.distance - b.distance
+				return a.distance - b.distance;
 			});
 			let closest = [];
 			distances.map((distance)=>{
 				closest.push(distance.node);
-			})
+			});
 			node.closest = closest;
 		});
 		return nodes;
-	})()
+	})();
 
 	ships = (() => {
 		let ships = [];
@@ -194,7 +194,7 @@ const createThings = () => {
 		},5000);
 		nodeOrderedList[node._posAsString] = node;
 
-	})
+	});
 
 	ships.map((ship)=>{
 		let startPos = JSON.stringify([ship[0],ship[1]]);
@@ -211,28 +211,28 @@ const createThings = () => {
 
 self.onmessage = function(ev) {
 	switch(ev.data.body) {
-		case 'sendParameters' :
-			speed = ev.data.payload.speed;
-			starCount = ev.data.payload.starCount;
-			lineCount = ev.data.payload.lineCount;
-			padding = ev.data.payload.padding;
-			size = ev.data.payload.size;
-			style = ev.data.payload.style;
-			fuzziness = ev.data.payload.fuzziness;
-			createThings();
-			break;
-		case 'requestUpdate' :
-			isJiggling = ev.data.payload.isJiggling;
-			pointerPosition = ev.data.payload.pointerPosition;
-			repositionNodes();
-			text.send(
+	case 'sendParameters' :
+		speed = ev.data.payload.speed;
+		starCount = ev.data.payload.starCount;
+		lineCount = ev.data.payload.lineCount;
+		padding = ev.data.payload.padding;
+		size = ev.data.payload.size;
+		style = ev.data.payload.style;
+		fuzziness = ev.data.payload.fuzziness;
+		createThings();
+		break;
+	case 'requestUpdate' :
+		isJiggling = ev.data.payload.isJiggling;
+		pointerPosition = ev.data.payload.pointerPosition;
+		repositionNodes();
+		text.send(
 				self,
 				'updateComplete',
-				{
-					stars: nodeRenderList,
-					lines: shipRenderList
-				}
-			)
-			break;
+			{
+				stars: nodeRenderList,
+				lines: shipRenderList
+			}
+			);
+		break;
 	}
-}
+};
