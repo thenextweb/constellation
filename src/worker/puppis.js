@@ -75,14 +75,13 @@ const repositionNodes = () => {
 
 		if(isJiggling) {
 			localSpeed = speed.passive;
-			x = node.original[0] + node._jiggle[0],
+			x = node.original[0] + node._jiggle[0];
 			y = node.original[1] + node._jiggle[1];
 		}
 
 		if(
-			(x > node.original[0] - fuzziness*1.1 && x < node.original[0] + fuzziness*1.1)
-			&&
-			(y > node.original[1] - fuzziness*1.1 && y < node.original[1] + fuzziness*1.1)
+			   (x > node.original[0] - fuzziness*1.1 && x < node.original[0] + fuzziness*1.1) 
+			&& (y > node.original[1] - fuzziness*1.1 && y < node.original[1] + fuzziness*1.1)
 		)
 		{
 			let fromCenter = [
@@ -143,8 +142,7 @@ const createThings = () => {
 				let localDistance =
 					Math.sqrt(
 						Math.pow(node.pos[0]-subnode.pos[0],2)
-						+
-						Math.pow(node.pos[1]-subnode.pos[1],2)
+						+ Math.pow(node.pos[1]-subnode.pos[1],2)
 					);
 				if(localDistance < 0) localDistance = localDistance*-1;
 				if(localDistance !== 0)  {
