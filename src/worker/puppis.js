@@ -80,7 +80,7 @@ const repositionNodes = () => {
 		}
 
 		if(
-			   (x > node.original[0] - fuzziness*1.1 && x < node.original[0] + fuzziness*1.1) 
+			(x > node.original[0] - fuzziness*1.1 && x < node.original[0] + fuzziness*1.1)
 			&& (y > node.original[1] - fuzziness*1.1 && y < node.original[1] + fuzziness*1.1)
 		)
 		{
