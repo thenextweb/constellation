@@ -50,7 +50,7 @@
   "scripts": {
     "gulp": "./node_modules/.bin/gulp",
     "install": "gulp make",
-    "eslint": "eslint --ignore-path .gitignore ."
+    "eslint": "eslint --ignore-path .gitignore .",
     "release": "npm publish && npm install && gulp release",
     "test": "gulp test"
   }
