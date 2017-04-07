@@ -1,7 +1,7 @@
 # constellation-canvas
 Draws cute animated canvas constellations.
 
-[See it in action here!](https://walaura.github.io/constellation/)
+[See it in action here!](https://thenextweb.github.io/constellation/)
 
 <p align="center">
   <img src="http://i.imgur.com/gLCMGoi.png">
@@ -17,7 +17,7 @@ Grab the code from here or npm
 
     #or#
 
-    git checkout git@github.com:walaura/constellation.git
+    git checkout git@github.com:thenextweb/constellation.git
     npm install
 
 Then just import it and feed it some parameters. There's a full list below.
@@ -41,7 +41,7 @@ Then just import it and feed it some parameters. There's a full list below.
 
 
 ## Usage (browser)
-Grab the [latest release](https://github.com/walaura/constellation/releases) and drop it in as a script tag. `window.constellation` will appear
+Grab the [latest release](https://github.com/thenextweb/constellation/releases) and drop it in as a script tag. `window.constellation` will appear
 
 
 
